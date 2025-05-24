@@ -10,3 +10,11 @@
         - Form submission
         - Application / Project introduction
         - Exercise
+- Day 3
+    - Styling
+        - Inline styles
+        - Style tag
+        - Stylesheets
+        - Developer tools
+        - Cascading StyleSheets
+        

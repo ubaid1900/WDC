@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Forms</title>
-</head>
-<body>
+    <style>
+      .must {
+        color: red;
+        font-style: italic;
+      }
+      .must::after {
+        content: '*';
+      }
+    </style>
+  </head>
+  <body>
     <h1>Forms</h1>
     <!-- text
     number
@@ -18,30 +27,29 @@
     one or more of the options
 
     button -->
-    <input type="text">
-    <textarea ></textarea>
-    <input type="date" name="" id="">
-    <input type="number" name="" id="">
-    <input type="email" name="" id="">
-    <input type="tel" name="" id="">
-    <input type="color" name="" id="">
-    <input type="checkbox" name="" id="">
-    <input type="password" name="" id="">
+    <label class="must" for="firstName">First name</label
+    ><input name="firstName" type="text" />
+    <textarea></textarea>
+    <input type="date" name="" id="" />
+    <input type="number" name="" id="" />
+    <input type="email" name="" id="" />
+    <input type="tel" name="" id="" />
+    <input type="color" name="" id="" />
+    <input type="checkbox" name="" id="" />
+    <input type="password" name="" id="" />
     <select name="" id="">
-        <option value="option 1">option 1</option>
-        <option value="option 2">option 2</option>
-        <option value="option 3">option 3</option>
+      <option value="option 1">option 1</option>
+      <option value="option 2">option 2</option>
+      <option value="option 3">option 3</option>
     </select>
     option 1
-    <input type="radio" name="options" id="" value="option 1" >
+    <input type="radio" name="options" id="" value="option 1" />
     option 2
-    <input type="radio" name="options" id="" value="option 2" >
+    <input type="radio" name="options" id="" value="option 2" />
     option 3
-    <input type="radio" name="options" id="" value="option 3" >
+    <input type="radio" name="options" id="" value="option 3" />
 
-    <input type="button" value="button to submit">
-    <input type="submit" value="submit">
-
-
-</body>
+    <input type="button" value="button to submit" />
+    <input type="submit" value="submit" />
+  </body>
 </html>

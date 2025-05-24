@@ -1,14 +1,54 @@
 <html>
   <head>
     <title>Html Tables</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      td { /* element selector */
+        margin: 1px;
+        border-width: 0.2em;
+        border-color: teal;
+        border-style: solid;
+      }
+      .tableStyle { /* class selector */
+        font-size: small;
+      }
+      
+      #table1 { /* id selector */
+        color: white;
+        background-color: black;
+      }
+
+      table {
+        color: green;
+      }
+
+      table {
+        color: red;
+      }
+
+      /* cascading */
+    </style>
   </head>
   <body>
-    <table border="1" cellspacing="10" cellpadding="5"
-    style="border-collapse: collapse;" >
+    <table id="table1"
+      border="1"
+      cellspacing="10"
+      cellpadding="5"
+      style="border-collapse: collapse"
+    >
       <tr>
-        <td><em>Row 1, Cell 1</em></td>
+        <td>Row 1, Cell 1</td>
         <td>Row 1, Cell 2</td>
-        <td>Row 1, Cell 3</td>
+        <td
+          style="
+            margin: 1px;
+            border-width: 0.3em;
+            border-color: teal;
+            border-style: solid;
+          "
+        >
+          Row 1, Cell 3
+        </td>
       </tr>
       <tr>
         <td>Row 2, Cell 1</td>
@@ -21,24 +61,24 @@
         <td>Row 3, Cell 3</td>
       </tr>
     </table>
-
-    <table>
-        <tr>
-            <td>H.No 1-2-3</td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Hyderabad</td>
-            <td>Telangana</td>
-            <td>500036</td>
-        </tr>
+<br><br>
+    <table class="tableStyle">
+      <tr>
+        <td>H.No 1-2-3</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Hyderabad</td>
+        <td>Telangana</td>
+        <td>500036</td>
+      </tr>
     </table>
     <address>
-        H.No 1-2-3	<br/>	<hr/>
-Hyderabad	Telangana	500036
+      H.No 1-2-3 <br />
+      <hr />
+      Hyderabad Telangana 500036
     </address>
-
   </body>
 </html>
 <!-- ALT + Shift + F -->
