@@ -17,4 +17,14 @@
         - Stylesheets
         - Developer tools
         - Cascading StyleSheets
+- Day 4
+    - Javascript
+        - What is programming
+        - Javascript language
+        - Variables and data types
+        - Conditionals
+        - Developer tools for javascript
+
+
+
         
