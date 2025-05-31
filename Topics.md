@@ -25,6 +25,14 @@
         - Conditionals
         - Developer tools for javascript
 
+- Day 5
+    - Javascript continued
+        - Loops
+        - Arrays
+        - Functions
+        - Objects
+        - 
+
 
 
         
