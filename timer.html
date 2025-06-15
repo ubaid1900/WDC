@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timer</title>
+  </head>
+  <body>
+    <span id="minutes">0</span>:<span id="seconds">0</span>
+    <button id="startButton" onclick="start();">START</button>
+  </body>
+  <script>
+    let secondsCounter = 0;
+    let minutesCounter = 0
+    function f1() {
+      secondsCounter++;
+      document.getElementById("seconds").innerText = secondsCounter;
+
+      if (secondsCounter % 60 === 0) {
+        secondsCounter = 0;
+        document.getElementById("seconds").innerText = 0;
+        document.getElementById("minutes").innerText = ++minutesCounter;
+      }
+    }
+
+    function start() {
+      const id = setInterval(f1, 1000);
+
+      if (secondsCounter == 1000) {
+        clearInterval(id);
+      }
+    }
+  </script>
+</html>

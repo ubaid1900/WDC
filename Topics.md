@@ -1,3 +1,4 @@
+ https://github.com/ubaid1900/WDC
  - Day 1
     File extensions
     Elements and their tags
@@ -19,7 +20,7 @@
         - Cascading StyleSheets
 - Day 4
     - Javascript
-        - What is programming
+        - What is programmings
         - Javascript language
         - Variables and data types
         - Conditionals
@@ -30,8 +31,12 @@
         - Loops
         - Arrays
         - Functions
-        - Objects
         - Events
+        - DOM - document object model and DOM api
+        - Applying what we have learnt so far with a counter application - https://github.com/ubaid1900/Counter
+        - Local storage (persistence)
+        - Objects
+        - JSON
 
 
 

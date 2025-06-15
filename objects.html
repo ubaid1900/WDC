@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Objects</title>
+  </head>
+  <body></body>
+  <script>
+    let fn = "John";
+    let ln = "Doe";
+    let empType = "Contractor";
+
+    const employee = {
+      firstName: "John",
+      lastName: "Doe",
+      employeeType: "Permanent",
+    };
+
+
+    const employee1 = {
+      firstName: "Jane",
+      lastName: "Doe",
+      employeeType: "Contractor",
+    };
+
+    console.log(employee);
+    console.log(employee1);
+
+    localStorage.setItem('e1', JSON.stringify(employee));
+    localStorage.setItem('e2', JSON.stringify(employee1));
+
+    console.log(localStorage.getItem('e1'));
+    console.log(localStorage.getItem('e2'));
+
+    const stringEmployee = JSON.stringify(employee);
+    console.log(stringEmployee);
+
+    const parsedEmployee = JSON.parse(stringEmployee);
+    console.log(parsedEmployee);
+    
+  </script>
+</html>

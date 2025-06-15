@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events</title>
+</head>
+<!-- <body onclick="alert('body clicked');"> -->
+<body style="border: 1px solid red; height: 100px" onclick='console.log("body clicked", event, this);' onmouseover="console.log('mouse over the body', event, this)">
+    <div style="height: 50; border: 1px solid green" onclick='console.log("div clicked", event, this);'>Div 1</div>
+    <div>div 2</div>
+
+    <section id="section1">Section 1</section>
+    <section class="sectionClass">Text<span>span 1 in sectionClass</span></section>
+    <script>
+        // window.alert('dsfd');
+        // console.log(document.getElementsByTagName('div'));
+        // console.log(document.getElementById('section1'));
+        // console.log(document.getElementsByClassName('sectionClass'));
+
+        localStorage.setItem('key 1', "value 1");
+        localStorage.setItem('key 2', "value 2");
+
+        alert(localStorage.getItem('key 1'));
+        alert(localStorage.getItem('key 3'));
+
+        localStorage.removeItem('key 2')
+
+        localStorage.clear();
+    </script>
+</body>
+</html>
