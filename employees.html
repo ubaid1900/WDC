@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Employees</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='10' r='6' fill='%231976d2'/%3E%3Crect x='6' y='18' width='20' height='10' rx='5' fill='%2342a5f5'/%3E%3C/svg%3E">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: #f4f6f8;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 1100px;
+        margin: 40px auto;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+        padding: 32px 40px 40px 40px;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 32px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 24px;
+      }
+      th,
+      td {
+        padding: 12px 10px;
+        text-align: left;
+      }
+      th {
+        background: #1976d2;
+        color: #fff;
+        font-weight: 600;
+      }
+      tr:nth-child(even) {
+        background: #f0f4f8;
+      }
+      tr:hover {
+        background: #e3f2fd;
+      }
+      .btn {
+        padding: 7px 18px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 15px;
+        margin-right: 6px;
+        transition: background 0.2s;
+      }
+      .btn-add {
+        background: #1976d2;
+        color: #fff;
+        margin-bottom: 18px;
+      }
+      .btn-edit {
+        background: #ffa726;
+        color: #fff;
+      }
+      .btn-delete {
+        background: #e53935;
+        color: #fff;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 10;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.25);
+        align-items: center;
+        justify-content: center;
+      }
+      .modal-content {
+        background: #fff;
+        padding: 28px 32px;
+        border-radius: 8px;
+        min-width: 340px;
+        box-shadow: 0 2px 16px rgba(0, 0, 0, 0.13);
+      }
+      .modal-content h2 {
+        margin-top: 0;
+        margin-bottom: 18px;
+        color: #1976d2;
+      }
+      .form-group {
+        margin-bottom: 14px;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+      }
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        padding: 7px 8px;
+        border: 1px solid #bdbdbd;
+        border-radius: 4px;
+        font-size: 15px;
+      }
+      .modal-actions {
+        text-align: right;
+      }
+      .modal-actions .btn {
+        margin-left: 8px;
+      }
+      @media (max-width: 700px) {
+        .container {
+          padding: 12px;
+        }
+        .modal-content {
+          min-width: 90vw;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header
+        style="
+          background: linear-gradient(90deg, #1976d2 60%, #42a5f5 100%);
+          padding: 38px 0 26px 0;
+          margin-bottom: 32px;
+          border-radius: 0 0 18px 18px;
+          box-shadow: 0 2px 10px rgba(25, 118, 210, 0.09);
+        "
+      >
+        <h1
+          style="
+            color: #fff;
+            text-align: center;
+            font-size: 2.7rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin: 0;
+            text-shadow: 0 2px 8px rgba(25, 118, 210, 0.13);
+          "
+        >
+          <span style="display: inline-block; vertical-align: middle">
+            <svg
+              width="38"
+              height="38"
+              viewBox="0 0 24 24"
+              fill="#fff"
+              style="margin-right: 10px; opacity: 0.85; vertical-align: middle"
+            >
+              <path
+                d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05C16.64 13.36 19 14.28 19 15.5V19h5v-2.5c0-2.33-4.67-3.5-7-3.5z"
+              />
+            </svg>
+          </span>
+          Employees
+        </h1>
+      </header>
+      <button class="btn btn-add" id="addEmployeeBtn">Add Employee</button>
+    <div style="margin-bottom: 18px; text-align: right;">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search employees..."
+        style="padding: 7px 12px; border: 1px solid #bdbdbd; border-radius: 4px; font-size: 15px; width: 260px;"
+      />
+    </div>
+    <table id="employeesTable">
+      <thead>
+        <tr>
+        <th data-sort="firstName" style="cursor:pointer">First Name &#8597;</th>
+        <th data-sort="lastName" style="cursor:pointer">Last Name &#8597;</th>
+        <th data-sort="dob" style="cursor:pointer">Date of Birth &#8597;</th>
+        <th data-sort="dateJoined" style="cursor:pointer">Date Joined &#8597;</th>
+        <th data-sort="type" style="cursor:pointer">Type &#8597;</th>
+        <th data-sort="department" style="cursor:pointer">Department &#8597;</th>
+        <th data-sort="gender" style="cursor:pointer">Gender &#8597;</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Employees will be rendered here -->
+      </tbody>
+    </table>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+      <div>
+        <label for="pageSizeSelect" style="font-size: 15px; color: #333; margin-right: 6px;">Page size:</label>
+        <select id="pageSizeSelect" style="padding: 6px 10px; border-radius: 4px; font-size: 15px;">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+        </select>
+      </div>
+      <div id="pagination" style="text-align:center;"></div>
+    </div>
+    <script>
+      // --- Pagination state ---
+      let currentPage = 1;
+      let pageSize = 5;
+
+      // --- Sorting state ---
+      let sortState = { key: null, asc: true };
+
+      // --- Sort helper ---
+      function sortEmployees(arr, key, asc) {
+        return arr.slice().sort((a, b) => {
+          let v1 = a[key], v2 = b[key];
+          // For date fields, compare as dates
+          if (key === "dob" || key === "dateJoined") {
+            v1 = new Date(v1);
+            v2 = new Date(v2);
+            return asc ? v1 - v2 : v2 - v1;
+          }
+          // For string fields
+          v1 = (v1 || "").toLowerCase();
+          v2 = (v2 || "").toLowerCase();
+          if (v1 < v2) return asc ? -1 : 1;
+          if (v1 > v2) return asc ? 1 : -1;
+          return 0;
+        });
+      }
+
+      // --- Search functionality + sorting + pagination ---
+      const searchInput = document.getElementById("searchInput");
+      let lastSearch = "";
+
+      function renderTable(filter = "") {
+        let employees = getEmployees();
+        const tbody = document.querySelector("#employeesTable tbody");
+        tbody.innerHTML = "";
+        let filtered = employees;
+        if (filter) {
+          const q = filter.trim().toLowerCase();
+          filtered = employees.filter(emp =>
+            Object.values(emp)
+              .join(" ")
+              .toLowerCase()
+              .includes(q)
+          );
+        }
+        // Sort if needed
+        if (sortState.key) {
+          filtered = sortEmployees(filtered, sortState.key, sortState.asc);
+        }
+
+        // --- Pagination logic ---
+        const total = filtered.length;
+        const totalPages = Math.max(1, Math.ceil(total / pageSize));
+        if (currentPage > totalPages) currentPage = totalPages;
+        const startIdx = (currentPage - 1) * pageSize;
+        const endIdx = startIdx + pageSize;
+        const pageItems = filtered.slice(startIdx, endIdx);
+
+        pageItems.forEach((emp, idx) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+                  <td>${emp.firstName}</td>
+                  <td>${emp.lastName}</td>
+                  <td>${emp.dob}</td>
+                  <td>${emp.dateJoined}</td>
+                  <td>${emp.type}</td>
+                  <td>${emp.department}</td>
+                  <td>${emp.gender}</td>
+                  <td><button class="btn btn-edit" data-idx="${employees.indexOf(emp)}">Edit</button></td>
+                  <td><button class="btn btn-delete" data-idx="${employees.indexOf(emp)}">Delete</button></td>
+              `;
+          tbody.appendChild(tr);
+        });
+
+        // --- Render pagination controls ---
+        const pagDiv = document.getElementById("pagination");
+        pagDiv.innerHTML = "";
+        if (totalPages > 1) {
+          let html = `<button class="btn" ${currentPage === 1 ? "disabled" : ""} id="prevPageBtn">&laquo; Prev</button>`;
+          for (let i = 1; i <= totalPages; i++) {
+            html += `<button class="btn${i === currentPage ? ' btn-add' : ''}" data-page="${i}">${i}</button>`;
+          }
+          html += `<button class="btn" ${currentPage === totalPages ? "disabled" : ""} id="nextPageBtn">Next &raquo;</button>`;
+          pagDiv.innerHTML = html;
+
+          // Page number click
+          pagDiv.querySelectorAll("button[data-page]").forEach(btn => {
+            btn.onclick = function () {
+              currentPage = parseInt(this.getAttribute("data-page"));
+              renderTable(lastSearch);
+            };
+          });
+          // Prev/Next
+          const prevBtn = pagDiv.querySelector("#prevPageBtn");
+          if (prevBtn) prevBtn.onclick = function () {
+            if (currentPage > 1) {
+              currentPage--;
+              renderTable(lastSearch);
+            }
+          };
+          const nextBtn = pagDiv.querySelector("#nextPageBtn");
+          if (nextBtn) nextBtn.onclick = function () {
+            if (currentPage < totalPages) {
+              currentPage++;
+              renderTable(lastSearch);
+            }
+          };
+        }
+      }
+
+      searchInput.addEventListener("input", function () {
+        lastSearch = this.value;
+        currentPage = 1;
+        renderTable(lastSearch);
+      });
+
+      // --- Sorting event handlers ---
+      document.querySelectorAll("#employeesTable thead th[data-sort]").forEach(th => {
+        th.addEventListener("click", function () {
+          const key = this.getAttribute("data-sort");
+          if (sortState.key === key) {
+            sortState.asc = !sortState.asc;
+          } else {
+            sortState.key = key;
+            sortState.asc = true;
+          }
+          renderTable(lastSearch);
+        });
+    });
+
+      // --- Page size select ---
+      const pageSizeSelect = document.getElementById("pageSizeSelect");
+      pageSizeSelect.value = pageSize;
+      pageSizeSelect.addEventListener("change", function () {
+        pageSize = parseInt(this.value);
+        currentPage = 1;
+        renderTable(lastSearch);
+      });
+
+      // Patch initial renderTable call in main script
+      renderTable();
+    </script>
+    </div>
+
+    <!-- Modal for Add/Edit -->
+    <div class="modal" id="employeeModal">
+      <div class="modal-content">
+        <h2 id="modalTitle">Add Employee</h2>
+        <form id="employeeForm">
+          <input type="hidden" id="employeeIndex" />
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input required type="text" id="firstName" />
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input required type="text" id="lastName" />
+          </div>
+          <div class="form-group">
+            <label for="dob">Date of Birth</label>
+            <input required type="date" id="dob" />
+          </div>
+          <div class="form-group">
+            <label for="dateJoined">Date Joined</label>
+            <input required type="date" id="dateJoined" />
+          </div>
+          <div class="form-group">
+            <label for="type">Type</label>
+            <select required id="type">
+              <option value="">Select</option>
+              <option value="Permanent">Permanent</option>
+              <option value="Contractor">Contractor</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="department">Department</label>
+            <select required id="department">
+              <option value="">Select</option>
+              <option value="IT">IT</option>
+              <option value="HR">HR</option>
+              <option value="Finance">Finance</option>
+              <option value="Marketing">Marketing</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="gender">Gender</label>
+            <select required id="gender">
+              <option value="">Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Non-binary">Non-binary</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn" id="cancelBtn">Cancel</button>
+            <button type="submit" class="btn btn-add" id="saveBtn">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Seed data
+      const seedEmployees = [
+        {
+          firstName: "John",
+          lastName: "Doe",
+          dob: "1990-01-15",
+          dateJoined: "2020-06-01",
+          type: "Permanent",
+          department: "IT",
+          gender: "Male",
+        },
+        {
+          firstName: "Jane",
+          lastName: "Smith",
+          dob: "1985-03-22",
+          dateJoined: "2018-09-15",
+          type: "Contractor",
+          department: "HR",
+          gender: "Female",
+        },
+        {
+          firstName: "Alex",
+          lastName: "Johnson",
+          dob: "1992-07-10",
+          dateJoined: "2021-01-10",
+          type: "Permanent",
+          department: "Finance",
+          gender: "Non-binary",
+        },
+        {
+          firstName: "Maria",
+          lastName: "Garcia",
+          dob: "1988-11-05",
+          dateJoined: "2019-03-12",
+          type: "Permanent",
+          department: "Marketing",
+          gender: "Female",
+        },
+        {
+          firstName: "Michael",
+          lastName: "Brown",
+          dob: "1995-04-18",
+          dateJoined: "2022-07-25",
+          type: "Contractor",
+          department: "IT",
+          gender: "Male",
+        },
+        {
+          firstName: "Linda",
+          lastName: "Wilson",
+          dob: "1983-09-30",
+          dateJoined: "2017-11-03",
+          type: "Permanent",
+          department: "HR",
+          gender: "Female",
+        },
+        {
+          firstName: "David",
+          lastName: "Lee",
+          dob: "1991-12-12",
+          dateJoined: "2020-02-20",
+          type: "Contractor",
+          department: "Finance",
+          gender: "Male",
+        },
+        {
+          firstName: "Sophia",
+          lastName: "Martinez",
+          dob: "1993-06-08",
+          dateJoined: "2021-05-14",
+          type: "Permanent",
+          department: "Marketing",
+          gender: "Female",
+        },
+        {
+          firstName: "Chris",
+          lastName: "Kim",
+          dob: "1987-02-25",
+          dateJoined: "2016-08-19",
+          type: "Permanent",
+          department: "IT",
+          gender: "Male",
+        },
+        {
+          firstName: "Emily",
+          lastName: "Clark",
+          dob: "1996-10-03",
+          dateJoined: "2023-01-09",
+          type: "Contractor",
+          department: "Finance",
+          gender: "Female",
+        },
+        {
+          firstName: "Jordan",
+          lastName: "Patel",
+          dob: "1994-05-17",
+          dateJoined: "2022-03-28",
+          type: "Permanent",
+          department: "HR",
+          gender: "Non-binary",
+        },
+      ];
+
+      // Local Storage Key
+      const LS_KEY = "employees";
+
+      // Get employees from localStorage or seed
+      function getEmployees() {
+        let employees = localStorage.getItem(LS_KEY);
+        if (!employees) {
+          localStorage.setItem(LS_KEY, JSON.stringify(seedEmployees));
+          return [...seedEmployees];
+        }
+        return JSON.parse(employees);
+      }
+
+      function setEmployees(employees) {
+        localStorage.setItem(LS_KEY, JSON.stringify(employees));
+      }
+
+      // Modal logic
+      const modal = document.getElementById("employeeModal");
+      const addBtn = document.getElementById("addEmployeeBtn");
+      const cancelBtn = document.getElementById("cancelBtn");
+      const form = document.getElementById("employeeForm");
+      const modalTitle = document.getElementById("modalTitle");
+      const employeeIndex = document.getElementById("employeeIndex");
+
+      function openModal(edit = false, data = {}, idx = null) {
+        modal.style.display = "flex";
+        modalTitle.textContent = edit ? "Edit Employee" : "Add Employee";
+        form.reset();
+        employeeIndex.value = idx !== null ? idx : "";
+        document.getElementById("firstName").value = data.firstName || "";
+        document.getElementById("lastName").value = data.lastName || "";
+        document.getElementById("dob").value = data.dob || "";
+        document.getElementById("dateJoined").value = data.dateJoined || "";
+        document.getElementById("type").value = data.type || "";
+        document.getElementById("department").value = data.department || "";
+        document.getElementById("gender").value = data.gender || "";
+      }
+
+      function closeModal() {
+        modal.style.display = "none";
+      }
+
+      // Add Employee
+      addBtn.onclick = () => openModal();
+
+      // Cancel Modal
+      cancelBtn.onclick = closeModal;
+
+      // Save Employee (Add/Edit)
+      form.onsubmit = function (e) {
+        e.preventDefault();
+        const employees = getEmployees();
+        const emp = {
+          firstName: document.getElementById("firstName").value.trim(),
+          lastName: document.getElementById("lastName").value.trim(),
+          dob: document.getElementById("dob").value,
+          dateJoined: document.getElementById("dateJoined").value,
+          type: document.getElementById("type").value,
+          department: document.getElementById("department").value,
+          gender: document.getElementById("gender").value,
+        };
+        const idx = employeeIndex.value;
+        if (idx === "") {
+          employees.push(emp);
+        } else {
+          employees[idx] = emp;
+        }
+        setEmployees(employees);
+        renderTable();
+        closeModal();
+      };
+
+      // Edit/Delete Handlers
+      document.querySelector("#employeesTable tbody").onclick = function (e) {
+        if (e.target.classList.contains("btn-edit")) {
+          const idx = e.target.getAttribute("data-idx");
+          const employees = getEmployees();
+          openModal(true, employees[idx], idx);
+        }
+        if (e.target.classList.contains("btn-delete")) {
+          const idx = e.target.getAttribute("data-idx");
+          if (confirm("Are you sure you want to delete this employee?")) {
+            const employees = getEmployees();
+            employees.splice(idx, 1);
+            setEmployees(employees);
+            renderTable();
+          }
+        }
+      };
+
+      // Close modal on outside click
+      window.onclick = function (e) {
+        if (e.target === modal) closeModal();
+      };
+
+      // Initial render
+      renderTable();
+    </script>
+  </body>
+</html>
