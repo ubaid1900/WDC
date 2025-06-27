@@ -260,17 +260,51 @@
 
         pageItems.forEach((emp, idx) => {
           const tr = document.createElement("tr");
-          tr.innerHTML = `
-                  <td>${emp.firstName}</td>
-                  <td>${emp.lastName}</td>
-                  <td>${emp.dob}</td>
-                  <td>${emp.dateJoined}</td>
-                  <td>${emp.type}</td>
-                  <td>${emp.department}</td>
-                  <td>${emp.gender}</td>
-                  <td><button class="btn btn-edit" data-idx="${employees.indexOf(emp)}">Edit</button></td>
-                  <td><button class="btn btn-delete" data-idx="${employees.indexOf(emp)}">Delete</button></td>
-              `;
+
+          const tdFirstName = document.createElement("td");
+          tdFirstName.textContent = emp.firstName;
+          tr.appendChild(tdFirstName);
+
+          const tdLastName = document.createElement("td");
+          tdLastName.textContent = emp.lastName;
+          tr.appendChild(tdLastName);
+
+          const tdDob = document.createElement("td");
+          tdDob.textContent = emp.dob;
+          tr.appendChild(tdDob);
+
+          const tdDateJoined = document.createElement("td");
+          tdDateJoined.textContent = emp.dateJoined;
+          tr.appendChild(tdDateJoined);
+
+          const tdType = document.createElement("td");
+          tdType.textContent = emp.type;
+          tr.appendChild(tdType);
+
+          const tdDepartment = document.createElement("td");
+          tdDepartment.textContent = emp.department;
+          tr.appendChild(tdDepartment);
+
+          const tdGender = document.createElement("td");
+          tdGender.textContent = emp.gender;
+          tr.appendChild(tdGender);
+
+          const tdEdit = document.createElement("td");
+          const btnEdit = document.createElement("button");
+          btnEdit.className = "btn btn-edit";
+          btnEdit.setAttribute("data-idx", employees.indexOf(emp));
+          btnEdit.textContent = "Edit";
+          tdEdit.appendChild(btnEdit);
+          tr.appendChild(tdEdit);
+
+          const tdDelete = document.createElement("td");
+          const btnDelete = document.createElement("button");
+          btnDelete.className = "btn btn-delete";
+          btnDelete.setAttribute("data-idx", employees.indexOf(emp));
+          btnDelete.textContent = "Delete";
+          tdDelete.appendChild(btnDelete);
+          tr.appendChild(tdDelete);
+
           tbody.appendChild(tr);
         });
 
